@@ -36,7 +36,7 @@ export default function Home({ isConnected, message, author, images }) {
             ) : (
                 <div className={styles.imagesContainer}>
                     {images.map((str) => (
-                        <img className={styles.img} src={str} height="512px" />
+                        <img className={styles.img} src={str} height="340px" />
                     ))}
                     <h3 className={styles.captionMessage}>{message}</h3>
                 </div>
