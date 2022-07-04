@@ -7,12 +7,25 @@
     justify-content: center;
 }
 
-.message {
+.largeMessage {
     font-size: 128px;
     padding: 128px;
     font-family: "Roboto", sans-serif;
 }
 
+.captionMessage {
+    font-size: 48px;
+    font-family: "Roboto", sans-serif;
+}
+
 .connected {
     font-family: "Roboto Mono", monospace;
+}
+
+.imagesContainer {
+    padding: 128px;
+}
+
+.img {
+    margin: 8px;
 }

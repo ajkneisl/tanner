@@ -3,8 +3,9 @@ import clientPromise from "../lib/mongodb";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "./index.module.css";
+import Image from 'next/image'
 
-export default function Home({ isConnected, message }) {
+export default function Home({ isConnected, message, author, images }) {
     const router = useRouter();
     const [text, setText] = useState(15);
 
@@ -22,10 +23,16 @@ export default function Home({ isConnected, message }) {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.message}>{message}</h1>
+            {!images || images.length === 0 ? (
+                <h1 className={styles.largeMessage}>{message}</h1>
+            ) : (
+                <div className={styles.imagesContainer}>
+                    {images.map(str => <img className={styles.img} src={str} height="128px" />)}
+                    <h3 className={styles.captionMessage}>{message}</h3>
+                </div>
+            )}
             <p className={styles.connected}>
-                {isConnected ? "connected" : "disconnected"} — refreshing in{" "}
-                {text} seconds
+                sent by {author} — refreshing in {text} seconds
             </p>
         </div>
     );
@@ -44,15 +51,16 @@ export async function getServerSideProps(context) {
             .skip(count - 1)
             .toArray();
 
-        let msgStr = "";
-        if (message.length === 0) {
-            msgStr = "no message yet.";
-        } else {
-            msgStr = message[0].message;
-        }
+        let images = message[0].images;
+        if (images === undefined) images = [];
 
         return {
-            props: { isConnected: true, message: msgStr },
+            props: {
+                isConnected: true,
+                message: message[0].message,
+                author: message[0].authorName,
+                images,
+            },
         };
     } catch (e) {
         console.error(e);
