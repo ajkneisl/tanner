@@ -3,7 +3,6 @@ import clientPromise from "../lib/mongodb";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import Image from 'next/image'
 
 export default function Home({ isConnected, message, author, images }) {
     const router = useRouter();
@@ -23,11 +22,22 @@ export default function Home({ isConnected, message, author, images }) {
 
     return (
         <div className={styles.container}>
+            <style global jsx>{`
+                body {
+                    background-color: #171611;
+                }
+
+                * {
+                    color: white;
+                }
+            `}</style>
             {!images || images.length === 0 ? (
                 <h1 className={styles.largeMessage}>{message}</h1>
             ) : (
                 <div className={styles.imagesContainer}>
-                    {images.map(str => <img className={styles.img} src={str} height="128px" />)}
+                    {images.map((str) => (
+                        <img className={styles.img} src={str} height="512px" />
+                    ))}
                     <h3 className={styles.captionMessage}>{message}</h3>
                 </div>
             )}
